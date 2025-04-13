@@ -155,7 +155,7 @@ with st.sidebar:
 
 # Main Content
 
-st.title("Chatbot Application ")
+st.title("Chatbot Application.")
 
 
 if st.session_state["current_chat"]:
