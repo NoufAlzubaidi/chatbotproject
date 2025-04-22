@@ -1,6 +1,6 @@
 environment                 = "dev"
 resource_group_name         = "myresourcegroup"
-resource_group_location     = "EastUS"
+resource_group_location     = "East US"
 vnet_name                   = "vnet"
 vnet_address_space          = ["10.1.0.0/16"]
 web_subnet_name             = "default"
