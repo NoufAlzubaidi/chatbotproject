@@ -42,3 +42,27 @@ variable "environment" {
   description = "value"
   type = string
 }
+
+variable "vmss_subnet_name" {
+  description = "Virtual Network VMSS Subnet Name"
+  type        = string
+  default     = "vmsssubnet"
+}
+
+variable "vmss_subnet_address" {
+  description = "Virtual Network VMSS Subnet Address Spaces"
+  type        = list(string)
+  default     = ["10.1.2.0/24"]
+}
+
+variable "ag_subnet_name" {
+  description = "Application Gateway Subnet Name"
+  type        = string
+  default     = "agsubnet"
+}
+
+variable "ag_subnet_address" {
+  description = "Application Gateway Subnet Address Spaces"
+  type        = list(string)
+  default     = ["10.1.3.0/24"]
+}
