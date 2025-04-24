@@ -35,7 +35,8 @@ jobs:
           source venv/bin/activate
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run:  pip install -r requirements.txt --target=".python_packages/lib/site-packages"
+
 
       # Optional: Add step to run tests here
 
@@ -48,7 +49,7 @@ jobs:
           name: python-app
           path: |
             release.zip
-            !venv/
+           
 
   deploy:
     runs-on: ubuntu-latest
@@ -84,4 +85,6 @@ jobs:
           app-name: 'testfunctionappsda'
           slot-name: 'Production'
           package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+          scm-do-build-during-deployment: true
+          enable-oryx-build: true
           
