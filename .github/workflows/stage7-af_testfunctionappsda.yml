@@ -75,7 +75,7 @@ jobs:
 
       - name: Set Application Settings
         run: |
-          az functionapp config appsettings set --name testfunctionappsda --resource-group testsda --settings "FUNCTIONS_WORKER_RUNTIME=python" "KEY_VAULT_NAME=testkeyvaultsda" "APPINSIGHTS_INSTRUMENTATIONKEY=azurerm_application_insights.ai.instrumentation_key"
+          az functionapp config appsettings set --name testfunctionappsda --resource-group testsda --settings "FUNCTIONS_WORKER_RUNTIME=python" "KEY_VAULT_NAME=testkeyvaultsda" "APPINSIGHTS_INSTRUMENTATIONKEY=azurerm_application_insights.ai.instrumentation_key" "AzureWebJobsStorage=${{ secrets.AZURE_WEBJOBS_STORAGE }}"
 
       - name: 'Deploy to Azure Functions'
         uses: Azure/functions-action@v1
