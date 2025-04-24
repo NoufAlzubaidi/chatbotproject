@@ -1,6 +1,6 @@
 {
   "scriptFile": "../functionapp.py",
-  "entryPoint": "main",
+  "entryPoint": "chat",
   "bindings": [
     {
       "authLevel": "function",
