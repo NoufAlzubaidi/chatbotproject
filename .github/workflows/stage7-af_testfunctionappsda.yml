@@ -73,6 +73,10 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_FEA7B1FA8C9045A0B3D28A76B9B2CD00 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_144F9B16E8AE4F9CAF0A9ED7A2074344 }}
 
+      - name: Set Application Settings
+        run: |
+          az functionapp config appsettings set --name testfunctionappsda --resource-group testsda --settings "FUNCTIONS_WORKER_RUNTIME=python" "KEY_VAULT_NAME=testkeyvaultsda" "APPINSIGHTS_INSTRUMENTATIONKEY=azurerm_application_insights.ai.instrumentation_key"
+
       - name: 'Deploy to Azure Functions'
         uses: Azure/functions-action@v1
         id: deploy-to-function
