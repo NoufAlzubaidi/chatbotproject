@@ -28,3 +28,15 @@ resource "azurerm_virtual_machine" "tf-vm" {
     environment = "production"
   }
 }
+
+resource "azurerm_network_interface" "tf-vm_nic" {
+  name                = "tf-vm-nic"
+  location            = azurerm_resource_group.main.location
+  resource_group_name = azurerm_resource_group.main.name
+
+  ip_configuration {
+    name                          = "internal"
+    subnet_id                     = azurerm_subnet.tf-vm_subnet.id
+    private_ip_address_allocation = "Dynamic"
+  }
+}
