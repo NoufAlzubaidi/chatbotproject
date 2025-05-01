@@ -1,23 +1,31 @@
 resource "azurerm_linux_virtual_machine_scale_set" "app" {
-  name                = "vmss-app"
-  location            = azurerm_resource_group.main.location
+  name                = "vmss-${var.environment}-${var.app_name}"
   resource_group_name = azurerm_resource_group.main.name
-  upgrade_mode        = "Manual"
-  instances           = 2
-  admin_username      = "azureuser"
-  admin_password      = var.vm_password
+  location            = azurerm_resource_group.main.location
+  sku                 = "Standard_B2s"
+  instances           = var.vmss_instance_count
+  admin_username      = var.vm_admin_username
+
+  admin_ssh_key {
+    username   = var.vm_admin_username
+    public_key = file(var.ssh_public_key_path)
+  }
 
   source_image_reference {
     publisher = "Canonical"
     offer     = "UbuntuServer"
-    sku       = "20_04-lts"
+    sku       = "20.04-LTS"
     version   = "latest"
   }
 
-  sku {
-    name     = "Standard_B2s"
-    tier     = "Standard"
-    capacity = 2
+  network_interface {
+    name    = "nic-${var.environment}-vmss"
+    primary = true
+    ip_configuration {
+      name      = "internal"
+      primary   = true
+      subnet_id = azurerm_subnet.vmss.id
+    }
   }
 
   os_disk {
@@ -25,21 +33,9 @@ resource "azurerm_linux_virtual_machine_scale_set" "app" {
     storage_account_type = "Standard_LRS"
   }
 
-  network_interface {
-    name    = "vmss-nic"
-    primary = true
+  custom_data = filebase64("init_script.sh")
 
-    ip_configuration {
-      name      = "vmss-ipconfig"
-      subnet_id = azurerm_subnet.app_subnet.id
-      primary   = true
-    }
+  identity {
+    type = "SystemAssigned"
   }
-
-  admin_ssh_key {
-    username   = "azureuser"
-    public_key = file("~/.ssh/id_rsa.pub")
-  }
-
-  depends_on = [azurerm_network_interface_security_group_association.vmss_nic_nsg]
 }
