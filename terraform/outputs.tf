@@ -33,4 +33,3 @@ output "nsg_tf_vm_id" {
 output "bastion_host_id" {
   value = azurerm_bastion_host.terraform.id
 }
-
