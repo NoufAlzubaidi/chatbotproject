@@ -1,3 +1,5 @@
+data "azurerm_client_config" "current" {}
+
 resource "azurerm_key_vault" "main" {
   name                        = "tfappkeyvault"
   location                    = azurerm_resource_group.main.location
@@ -14,5 +16,3 @@ resource "azurerm_key_vault" "main" {
     secret_permissions = ["Get", "List", "Set", "Delete"]
   }
 }
-
-data "azurerm_client_config" "current" {}
