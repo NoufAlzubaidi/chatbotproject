@@ -1,13 +1,12 @@
 resource "azurerm_postgresql_flexible_server" "main" {
   name                   = "tf-db"
-  location               = "Norway East"
-  resource_group_name    = "terraform-sda"
+  location               = var.location
+  resource_group_name    = var.resource_group_name
   administrator_login    = "nouf"
-  administrator_password = var.db_password  
-
-  sku_name   = "B2ms"          
-  version    = "16"
-  storage_mb = 32768
+  administrator_password = var.db_password
+  sku_name               = var.postgresql_sku
+  version                = var.postgresql_version
+  storage_mb             = 32768
 
   delegated_subnet_id = azurerm_subnet.db_subnet.id
   zone                = "2"
