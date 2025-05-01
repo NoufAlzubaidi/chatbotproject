@@ -1,40 +1,62 @@
-# Virtual Network
-resource "azurerm_virtual_network" "main" {
-  name                = "vnet-${var.environment}-${var.app_name}"
-  address_space       = ["10.0.0.0/16"]
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
-}
-
-# Subnets
-resource "azurerm_subnet" "vmss" {
-  name                 = "snet-${var.environment}-vmss"
-  resource_group_name  = azurerm_resource_group.main.name
-  virtual_network_name = azurerm_virtual_network.main.name
+resource "azurerm_subnet" "db_subnet" {
+  name                 = "subnet-db"
   address_prefixes     = ["10.0.1.0/24"]
-}
-
-resource "azurerm_subnet" "appgw" {
-  name                 = "snet-${var.environment}-appgw"
   resource_group_name  = azurerm_resource_group.main.name
   virtual_network_name = azurerm_virtual_network.main.name
-  address_prefixes     = ["10.0.2.0/24"]
 }
 
-# Network Security Groups
-resource "azurerm_network_security_group" "vmss" {
-  name                = "nsg-${var.environment}-vmss"
+resource "azurerm_subnet" "vmss_subnet" {
+  name                 = "subnet-vmss"
+  address_prefixes     = ["10.0.2.0/24"]
+  resource_group_name  = azurerm_resource_group.main.name
+  virtual_network_name = azurerm_virtual_network.main.name
+}
+
+resource "azurerm_subnet" "appgw_subnet" {
+  name                 = "subnet-appgw"
+  address_prefixes     = ["10.0.3.0/24"]
+  resource_group_name  = azurerm_resource_group.main.name
+  virtual_network_name = azurerm_virtual_network.main.name
+}
+
+resource "azurerm_subnet" "tf-vm_subnet" {
+  name                 = "tf-vm-subnet"
+  address_prefixes     = ["10.0.5.0/24"]
+  resource_group_name  = azurerm_resource_group.main.name
+  virtual_network_name = azurerm_virtual_network.main.name
+}
+
+resource "azurerm_network_security_group" "vmss_nsg" {
+  name                = "nsg-vmss"
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
 
   security_rule {
-    name                       = "AllowStreamlit"
+    name                       = "AllowHTTP"
     priority                   = 100
     direction                  = "Inbound"
     access                     = "Allow"
     protocol                   = "Tcp"
     source_port_range          = "*"
-    destination_port_range     = "8501"
+    destination_port_range     = "80"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+}
+
+resource "azurerm_network_security_group" "tf-vm_nsg" {
+  name                = "tf-vm-nsg"
+  location            = azurerm_resource_group.main.location
+  resource_group_name = azurerm_resource_group.main.name
+
+  security_rule {
+    name                       = "AllowSSH"
+    priority                   = 100
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "22"
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
