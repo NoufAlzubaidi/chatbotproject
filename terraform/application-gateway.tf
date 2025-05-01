@@ -1,5 +1,5 @@
 resource "azurerm_public_ip" "appgw" {
-  name                = "pip-${var.environment}-appgw"
+  name                = "appgw-public-ip"
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
   allocation_method   = "Static"
@@ -7,9 +7,9 @@ resource "azurerm_public_ip" "appgw" {
 }
 
 resource "azurerm_application_gateway" "main" {
-  name                = "agw-${var.environment}-${var.app_name}"
-  resource_group_name = azurerm_resource_group.main.name
+  name                = "appgateway"
   location            = azurerm_resource_group.main.location
+  resource_group_name = azurerm_resource_group.main.name
 
   sku {
     name     = "Standard_v2"
@@ -18,50 +18,44 @@ resource "azurerm_application_gateway" "main" {
   }
 
   gateway_ip_configuration {
-    name      = "appgw-ip-config"
-    subnet_id = azurerm_subnet.appgw.id
+    name      = "appgateway-ip-config"
+    subnet_id = azurerm_subnet.appgw_subnet.id
   }
 
   frontend_port {
-    name = "http-port"
+    name = "frontend-port"
     port = 80
   }
 
   frontend_ip_configuration {
-    name                 = "appgw-frontend-ip"
+    name                 = "appgateway-frontend-ip"
     public_ip_address_id = azurerm_public_ip.appgw.id
   }
 
   backend_address_pool {
-    name = "vmss-backend-pool"
+    name = "app-backend-pool"
   }
 
   backend_http_settings {
-    name                  = "streamlit-settings"
-    port                  = 8501
+    name                  = "http-settings"
+    cookie_based_affinity = "Disabled"
+    port                  = 80
     protocol              = "Http"
-    request_timeout       = 60
-  }
-
-  backend_http_settings {
-    name                  = "fastapi-settings"
-    port                  = 8000
-    protocol              = "Http"
-    request_timeout       = 60
+    request_timeout       = 20
   }
 
   http_listener {
     name                           = "http-listener"
-    frontend_ip_configuration_name = "appgw-frontend-ip"
-    frontend_port_name             = "http-port"
+    frontend_ip_configuration_name = "appgateway-frontend-ip"
+    frontend_port_name             = "frontend-port"
     protocol                       = "Http"
   }
 
   request_routing_rule {
-    name                       = "streamlit-rule"
+    name                       = "http-rule"
     rule_type                  = "Basic"
     http_listener_name         = "http-listener"
-    backend_address_pool_name  = "vmss-backend-pool"
-    backend_http_settings_name = "streamlit-settings"
+    backend_address_pool_name  = "app-backend-pool"
+    backend_http_settings_name = "http-settings"
   }
 }
