@@ -7,18 +7,13 @@ resource "azurerm_linux_virtual_machine_scale_set" "app" {
   admin_username      = var.vm_admin_username
   admin_password      = var.vm_admin_password
 
-  source_image_reference {
-    publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "20_04-lts"
-    version   = "latest"
-  }
-
   sku {
     name     = "Standard_B2s"
     tier     = "Standard"
     capacity = var.vmss_instance_count
   }
+
+  source_image_id = var.source_image_id
 
   os_disk {
     caching              = "ReadWrite"
