@@ -21,3 +21,16 @@ resource "azurerm_storage_container" "files" {
   storage_account_name  = azurerm_storage_account.main.name
   container_access_type = "private"
 }
+
+resource "time_static" "now" {}
+
+data "azurerm_storage_account_sas" "sas" {
+  connection_string = azurerm_storage_account.main.primary_connection_string
+
+  https_only      = true
+  start           = time_static.now.rfc3339
+  expiry          = timeadd(time_static.now.rfc3339, "8760h") # valid for 1 year
+  resource_types  = ["o"]
+  services        = ["b"]
+  permissions     = "rwl"
+}
