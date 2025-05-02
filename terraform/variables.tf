@@ -62,15 +62,8 @@ variable "storage_replication_type" {
   type        = string
   default     = "LRS"
 }
-variable "storage_account_tier" {
-  default = "Standard"
-}
 
-variable "storage_replication_type" {
-  default = "LRS"
-}
 variable "source_image_id" {
   description = "The ID of the custom image to use for the VMSS"
   type        = string
 }
-
