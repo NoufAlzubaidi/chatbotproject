@@ -33,3 +33,8 @@ output "nsg_tf_vm_id" {
 output "bastion_host_id" {
   value = azurerm_bastion_host.terraform.id
 }
+
+output "azure_storage_sas_url" {
+  value = "https://${azurerm_storage_account.main.name}.blob.core.windows.net/${azurerm_storage_container.files.name}?${data.azurerm_storage_account_sas.sas.sas}"
+}
+
