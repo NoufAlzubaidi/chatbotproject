@@ -60,16 +60,4 @@ resource "azurerm_linux_virtual_machine_scale_set" "app" {
   depends_on = [azurerm_subnet_network_security_group_association.vmss_nic_nsg]
 }
 
-resource "azurerm_image" "custom" {
-  name                = "myCustomImage"
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
 
-  os_disk {
-    os_type       = "Linux"
-    os_state      = "Generalized"
-    caching       = "ReadWrite"
-    storage_type  = "Standard_LRS"
-    managed_disk_id = var.managed_disk_id
-  }
-}
