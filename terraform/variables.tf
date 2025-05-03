@@ -12,6 +12,7 @@ variable "resource_group_location" {
 variable "subscription_id" {
   description = "Azure Subscription ID"
   type        = string
+  sensitive   = true # إضافة علامة حساسة لأمان المعلومات
 }
 
 variable "vnet_name" {
@@ -39,15 +40,50 @@ variable "web_subnet_address" {
 }
 
 variable "environment" {
-  description = "value"
-  type = string
+  description = "Environment name (dev, staging, prod)"
+  type        = string
+  default     = "dev" # إضافة قيمة افتراضية
 }
+
 variable "tenant_id" {
-description = "Azure Tenant ID"
-type = string
+  description = "Azure Tenant ID for Key Vault authentication"
+  type        = string
+  sensitive   = true # إضافة علامة حساسة لأمان المعلومات
 }
 
 variable "object_id" {
-description = "Azure Object ID for Key Vault Access"
-type = string
+  description = "Azure Object ID for Key Vault Access Policy"
+  type        = string
+  sensitive   = true # إضافة علامة حساسة لأمان المعلومات
+}
+
+# متغيرات جديدة مطلوبة للكود السابق
+variable "db_administrator_login" {
+  description = "PostgreSQL administrator login username"
+  type        = string
+  sensitive   = true
+}
+
+variable "db_administrator_password" {
+  description = "PostgreSQL administrator password"
+  type        = string
+  sensitive   = true
+}
+
+variable "vm_admin_username" {
+  description = "Admin username for virtual machines"
+  type        = string
+  default     = "azureuser"
+}
+
+variable "vm_sku_size" {
+  description = "The size of the VM"
+  type        = string
+  default     = "Standard_B2ms"
+}
+
+variable "vmss_instance_count" {
+  description = "Number of VM instances in the scale set"
+  type        = number
+  default     = 2
 }
