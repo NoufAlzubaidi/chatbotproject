@@ -57,18 +57,6 @@ variable "object_id" {
   sensitive   = true # إضافة علامة حساسة لأمان المعلومات
 }
 
-# متغيرات جديدة مطلوبة للكود السابق
-variable "db_administrator_login" {
-  description = "PostgreSQL administrator login username"
-  type        = string
-  sensitive   = true
-}
-
-variable "db_administrator_password" {
-  description = "PostgreSQL administrator password"
-  type        = string
-  sensitive   = true
-}
 
 variable "vm_admin_username" {
   description = "Admin username for virtual machines"
