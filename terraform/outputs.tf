@@ -32,4 +32,22 @@ output "web_vm_virtual_machine_id" {
 }
 
 
+output "vmss_id" {
+description = "VM Scale Set ID"
+value = azurerm_linux_virtual_machine_scale_set.web_vmss.id
+}
 
+output "app_gateway_id" {
+description = "Application Gateway ID"
+value = azurerm_application_gateway.app_gateway.id
+}
+
+output "key_vault_id" {
+description = "Key Vault ID"
+value = azurerm_key_vault.kv.id
+}
+
+output "key_vault_name" {
+description = "Key Vault Name"
+value = azurerm_key_vault.kv.name
+}
