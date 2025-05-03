@@ -42,3 +42,12 @@ variable "environment" {
   description = "value"
   type = string
 }
+variable "tenant_id" {
+description = "Azure Tenant ID"
+type = string
+}
+
+variable "object_id" {
+description = "Azure Object ID for Key Vault Access"
+type = string
+}
