@@ -44,7 +44,7 @@ resource "azurerm_key_vault_access_policy" "vmss"{
 
 locals {
   secrets = {
-      "PROJ-DB-HOST" = azurerm-postgresql_flexible_server.db.fqdn
+      "PROJ-DB-HOST" = azurerm_postgresql_flexible_server.db.fqdn
       "PROJ-DB-PORT" = "5432"
       "PROJ-CHROMADB-HOST" = azurerm_linux_virtual_machine.web_vm.public_ip_address
       "PROJ-CHROMADB-PORT" = "8000"
