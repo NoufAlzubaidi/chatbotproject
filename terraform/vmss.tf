@@ -4,7 +4,7 @@ source_image_id =  "/subscriptions/9896598a-01c4-4709-b370-042f72f0e1ce/resource
 
 
 resource "azurerm_linux_virtual_machine_scale_set" "web_vmss" {
-  name                = "${local.resource_name_prefix}-web-vmss-${random_string.myrandom.id}"
+  name = "${var.resource_prefix}-${var.environment}-web-vmss-${random_string.myrandom.id}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   sku                 = "Standard_D2s_v6"
