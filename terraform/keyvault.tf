@@ -1,7 +1,7 @@
 data "azurerm_client_config" "current" {}
 
 resource "azurerm_key_vault" "kv" {
-  name      = "${local.resource-name-refix}−kv−${random_string.myrandom.id}"
+  name      = "${local.resource-name-prefix}−kv−${random_string.myrandom.id}"
   location     = azurerm_resource_group.rg.location
   resource_group_name   = azurerm_resource_group.rg.name
   enabled_for_disk_encryption  = true
