@@ -1,4 +1,4 @@
-loacls { 
+locals { 
 source_image_id =  "/subscriptions/9896598a-01c4-4709-b370-042f72f0e1ce/resourcegroups/milestone-sda/providers/Microsoft.Compute/galleries/myimage/images/chatbot-image/versions/1.0.0"
 }
 
