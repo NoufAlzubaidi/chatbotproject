@@ -1,5 +1,5 @@
 resource "azurerm_public_ip" "web_vm_publicip" {
-  name                = "${local.resource_name_prefix}-web-vm-publicip-${random_string.myrandom.id}"
+ name = "${var.resource_prefix}-${var.environment}-web-vm-${random_string.myrandom.id}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   allocation_method   = "Static"
