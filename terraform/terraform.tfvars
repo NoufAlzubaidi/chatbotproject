@@ -1,6 +1,6 @@
 environment                 = "dev"
 resource_group_name         = "terraform-vm"
-resource_group_location     = "canadacentral"
+resource_group_location     = "NorwayEast"
 vnet_name                   = "vnet"
 vnet_address_space          = ["10.1.0.0/16"]
 web_subnet_name             = "websubnet"
