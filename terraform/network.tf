@@ -70,7 +70,7 @@ resource "azurerm_network_security_rule" "web_nsg_rule_inbound" {
 }
 
 #Application Gateway subnet 
-resource "azure_subnet" "agsubnet" {
+resource "azurerm_subnet" "agsubnet" {
 name       = "${azurerm_virtual_network.vnet.name}-${var.ag_subnet_name}-${random_string.myrandom.id}"
 resource_group_name = azurerm_resource_group.rg.name
 resource_network_name = azurerm_virtual_network.vnet.name
