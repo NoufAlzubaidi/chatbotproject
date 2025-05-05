@@ -52,7 +52,7 @@ frontend_port {
 
 frontend_ip_configuration {
   name = local.frontend_ip_configuration_name
-  public_ip_address_id = azurerm_public_ip.wbe_ag_publicip.id
+  public_ip_address_id = azurerm_public_ip.web_ag_publicip.id
 }
 
 #Listener : HTTP 80 
