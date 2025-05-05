@@ -88,3 +88,16 @@ variable "vmss_instance_count" {
   type        = number
   default     = 2
 }
+
+variable "resource_prefix" {
+  description = "Prefix for all resource names (3-6 characters recommended)"
+  type        = string
+  default     = "chatbot"
+}
+
+variable "unique_suffix" {
+  description = "Random string suffix for unique resource naming"
+  type        = string
+  default     = null # سيتم توليده تلقائياً إذا لم يتم تحديده
+}
+
