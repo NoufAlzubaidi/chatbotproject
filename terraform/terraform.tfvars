@@ -1,9 +1,0 @@
-db_password = "@n123456789"
-subscription_id = "9896598a-01c4-4709-b370-042f72f0e1ce"
-vm_admin_password = "@n123456789"
-vm_admin_username   = "azureuser"
-vmss_instance_count = 2
-source_image_id = "/subscriptions/9896598a-01c4-4709-b370-042f72f0e1ce/resourceGroups/my-rg/providers/Microsoft.Compute/images/myCustomImage"
-
-
-
