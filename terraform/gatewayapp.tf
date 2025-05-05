@@ -36,7 +36,7 @@ sku {
 
 autoscale_configuration { 
   min_capacity = 0
-  min_capacity = 10
+  max_capacity = 10
 }
 
 gateway_ip_configuration {
