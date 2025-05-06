@@ -4,10 +4,10 @@ python-dotenv
 psycopg2-binary
 langchain-community
 langchain-openai
-langchain-chroma
+langchain-chroma==0.0.12  # تأكدي من تثبيت إصدار متوافق
 langchain
 langchain-core
-chromadb-client
+chromadb==0.4.15         # استبدلي chromadb-client بالحزمة الكاملة
 azure-storage-blob
 azure-cosmos
 azure-identity
