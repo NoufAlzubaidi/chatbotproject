@@ -1,14 +1,30 @@
 import streamlit as st
 import uuid
 import requests
+from dotenv import load_dotenv
+from azure.identity import DefaultAzureCredential
+from azure.keyvault.secrets import SecretClient
+import os
 
 # Backend URLs define
-LOAD_CHAT_URL = "http://127.0.0.1:5000/load_chat/"
-SAVE_CHAT_URL = "http://127.0.0.1:5000/save_chat/"
-DELETE_CHAT_URL = "http://127.0.0.1:5000/delete_chat/"
-UPLOAD_PDF_URL = "http://127.0.0.1:5000/upload_pdf/"
-CHAT_URL = "http://127.0.0.1:5000/chat/"
-RAG_CHAT_URL = "http://127.0.0.1:5000/rag_chat/"
+# BASE_URL = "http://127.0.0.1:8000/"
+# BASE_URL = "http://localhost:7071/api/"
+load_dotenv()
+
+keyVaultName = os.environ["KEY_VAULT_NAME"]
+KVUri = f"https://{keyVaultName}.vault.azure.net"
+
+credential = DefaultAzureCredential()
+kv_client = SecretClient(vault_url=KVUri, credential=credential)
+
+BASE_URL = kv_client.get_secret('PROJ-AZURE-CONTAINER-APP-URL').value
+
+LOAD_CHAT_URL = BASE_URL + "/load_chat/"
+SAVE_CHAT_URL = BASE_URL + "/save_chat/"
+DELETE_CHAT_URL = BASE_URL + "/delete_chat/"
+UPLOAD_PDF_URL = BASE_URL + "/upload_pdf/"
+CHAT_URL = BASE_URL + "/chat/"
+RAG_CHAT_URL = BASE_URL + "/rag_chat/"
 
 # Initialize session state
 if "history_chats" not in st.session_state:
@@ -154,7 +170,7 @@ with st.sidebar:
         st.button("Delete Chat", on_click=delete_chat)
 
 # Main Content
-st.title("Chatbot Application ")
+st.title("Chatbot Application")
 
 if st.session_state["current_chat"]:
     chat_id = st.session_state["current_chat"]
@@ -210,4 +226,4 @@ if st.session_state["current_chat"]:
                 current_chat["messages"].append({"role": "assistant", "content": response})
                 save_chat_to_db(chat_id, chat_name, current_chat["messages"], current_chat["pdf_name"], current_chat["pdf_path"], current_chat["pdf_uuid"])
 else:
-    st.write("No chat selected. Use the sidebar to create or select a chat")
+    st.write("No chat selected. Use the sidebar to create or select a chat.")
